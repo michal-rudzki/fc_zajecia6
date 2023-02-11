@@ -1,5 +1,6 @@
 import json
 import os.path
+from globals_modules import FILEDB
 
 DB = {
     'student': [],
@@ -17,24 +18,24 @@ class School():
         self.school_items = school_items
     
     def update_user_from_filedb(self):
-        with open('filedb.py', mode='r') as file:
+        with open(FILEDB, mode='r') as file:
             data_file = file.read()
         
         DB = json.loads(data_file)
         return DB
     
     def db_creation(self):
-        with open('filedb.py', mode='w') as file:
+        with open(FILEDB, mode='w') as file:
             file.write(json.dumps(DB, indent=4))
 
     def add_user(self):
         # make a exception for student, teacher, tutor
-        if os.path.isfile('filedb.py') == False:
+        if os.path.isfile(FILEDB) == False:
             self.db_creation()
         DB = self.update_user_from_filedb()
         DB[self.user_type].append([self.name, self.surname, self.class_name])
-        print(DB)
-        with open('filedb.py', mode='w') as file:
+        #print(DB)
+        with open(FILEDB, mode='w') as file:
             file.write(json.dumps(DB, indent=4))
 
 
