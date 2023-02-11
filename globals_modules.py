@@ -1,0 +1,1 @@
+USER_TYPE = ['student', 'teacher', 'tutor']
