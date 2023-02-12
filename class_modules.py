@@ -11,7 +11,9 @@ class School():
 
     def __init__(self, *args):
         self.user_type = args[0]
-        if args[0] == USER_TYPE[0]:
+        if args[0] == USER_TYPE[0] and len(args) == 1:
+            self.user_type = args[0]
+        elif args[0] == USER_TYPE[0]:
             self.user_name = args[1]
             self.class_name = args[2]
         elif args[0] == USER_TYPE[1]:
@@ -80,7 +82,21 @@ class School():
                 DB[self.user_type].update({self.class_name: self.user_name})
             with open(FILEDB, mode='w') as file:
                 file.write(json.dumps(DB, indent = 4))
-            
+    
+    def list_all_class(self):
+        DB = self.update_user_from_filedb()
+        class_list = DB[USER_TYPE[0]].keys()
+        return class_list
+    
+    def list_all_users_from_class(self, class_name):
+        DB = self.update_user_from_filedb()
+        class_students = DB[USER_TYPE[0]][class_name]
+        return class_students
+    
+    def tutor_of_the_class(self, class_name):
+        DB = self.update_user_from_filedb()
+        tutor = DB[USER_TYPE[2]][class_name]
+        return tutor
 
 if __name__ == '__main__':
     lista_db =[['student',['Michał Rudzki', '3c'],['Grzegorz Rudzki', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c']]]

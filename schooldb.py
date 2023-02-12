@@ -47,11 +47,32 @@ def main():
                 tutor = input().split(' ')
                 print(f"Nazwa prowadzonej klasy: ")
                 tutor.append(input().strip())
-                tutor_obj = School(USER_TYPE[2], tutor[0:3], tutor[3])
-                tutor_obj.add_user()
+                if len(tutor) == 4:
+                    tutor_obj = School(USER_TYPE[2], tutor[0:3], tutor[3])
+                    tutor_obj.add_user()
+                elif len(tutor) == 5:
+                    tutor_obj = School(USER_TYPE[2], tutor[0:4], tutor[4])
+                    tutor_obj.add_user()
 
         elif user_input in ['zarządzaj', 'z']:
-            print("Zarządzaj...")
+            print(f"Zarządzaj...")
+            print(f"[kl]asa, [u]czeń, [n]auczyciel")
+            user_input = input()
+            if not user_input or user_input in ['klasa', 'kl']:
+                print(f"Lista klas:")
+                class_list = School(USER_TYPE[0])
+                all_class = class_list.list_all_class()
+                for list_class in all_class:
+                    print(list_class)
+                print(f"wybierz klasę: ")
+                user_input = input()
+                class_list = School(USER_TYPE[0])
+                students_list = class_list.list_all_users_from_class(user_input)
+                tutor = " ".join(class_list.tutor_of_the_class(user_input))
+                print(f"Wychowawcą {user_input} jest {tutor}.")
+                for students in students_list:
+                    student = " ".join(students)
+                    print(f"uczeń: {student}")
 
 if __name__ == '__main__':
     main()
