@@ -17,6 +17,7 @@ class School():
         elif args[0] == USER_TYPE[1]:
             self.user_name = args[1]
             self.school_items = args[2]
+            self.class_name = args[3]
         elif args[0] == USER_TYPE[2]:
             self.user_name = args[1]
             self.class_name = args[2]
@@ -54,7 +55,7 @@ class School():
                 if self.user_type == USER_TYPE[0]:
                     DB[self.user_type].update({self.class_name: [self.user_name]})
                 elif self.user_type == USER_TYPE[1]:
-                    pass
+                    DB[self.user_type].update({" ".join(self.user_name): [self.class_name, self.school_items]})
                 elif self.user_type == USER_TYPE[2]:
                     DB[self.user_type].update({self.class_name: [self.user_name]})
                 with open(FILEDB, mode='w') as file:
@@ -64,7 +65,7 @@ class School():
             if self.user_type == USER_TYPE[0]:
                 DB[self.user_type][self.class_name].append(self.user_name)
             elif self.user_type == USER_TYPE[1]:
-                pass
+                DB[self.user_type].update({" ".join(self.user_name): [self.class_name, self.school_items]})
             elif self.user_type == USER_TYPE[2]:
                 DB[self.user_type].update({self.class_name: self.user_name})
             with open(FILEDB, mode='w') as file:
@@ -74,7 +75,7 @@ class School():
             if self.user_type == USER_TYPE[0]:
                 DB[self.user_type].update({self.class_name: [self.user_name]})
             elif self.user_type == USER_TYPE[1]:
-                pass
+                DB[self.user_type].update({" ".join(self.user_name): [self.class_name, self.school_items]})
             elif self.user_type == USER_TYPE[2]:
                 DB[self.user_type].update({self.class_name: self.user_name})
             with open(FILEDB, mode='w') as file:

@@ -23,8 +23,25 @@ def main():
                 student_obj.add_user()
 
             elif user_input in ['n', 'nauczyciel']:
-                pass
-
+                print(f"Podaj Tytuł oraz Imię i Nazeisko: [{USER_TYPE[1]}] ")
+                teacher  = input().split(' ')
+                print(f"Podaj nazwę przedmiotu prowadzonego (może lista przedmiotów oddzielona ','): ")
+                teacher.append(input().split(','))
+                print(f"Podaj listę klas, które nauczyciel prowadzi: ")
+                school_subject = []
+                while True:
+                    user_input = input()
+                    if not user_input or user_input == 'k' or user_input == 'koniec':
+                        break
+                    school_subject.append(user_input)
+                teacher.append(school_subject)
+                if len(teacher) == 5:
+                    teacher_obj = School(USER_TYPE[1], teacher[0:3], teacher[3], teacher[4])
+                    teacher_obj.add_user()
+                elif len(teacher) == 6:
+                    teacher_obj = School(USER_TYPE[1], teacher[0:4], teacher[4], teacher[5])
+                    teacher_obj.add_user()
+                    
             elif user_input in ['w', 'wychowawca']:
                 print(f"Podaj Tytuł oraz Imię i Nazwisko: [{USER_TYPE[2]}] ")
                 tutor = input().split(' ')
