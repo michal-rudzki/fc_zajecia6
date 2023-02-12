@@ -1,21 +1,24 @@
 import json
 import os.path
-from globals_modules import FILEDB
+from globals_modules import FILEDB, USER_TYPE
 
 DB = {
-    'student': [],
-    'teacher': [],
-    'tutor': []
+    'student': {},
+    'teacher': {},
+    'tutor': {}
 }
 class School():
 
-    def __init__(self, title, name, surname, user_type, class_name, school_items):
-        self.title = title
-        self.name = name
-        self.surname = surname
-        self.user_type = user_type
-        self.class_name = class_name
-        self.school_items = school_items
+    def __init__(self, *args):
+        self.user_type = args[0]
+        if args[0] == 'student':
+            self.user_name = args[1]
+            self.class_name = args[2]
+        elif args[0] == 'nauczyciel':
+            self.user_name = args[1]
+            self.school_items = args[2]
+        elif args[0] == 'wychowawca':
+            self.tutor = args[3]
     
     def update_user_from_filedb(self):
         with open(FILEDB, mode='r') as file:
@@ -26,25 +29,48 @@ class School():
     
     def db_creation(self):
         with open(FILEDB, mode='w') as file:
-            file.write(json.dumps(DB, indent=4))
+            file.write(json.dumps(DB, indent = 4))
 
+    def check_if_duplicate(self, user_list):
+        for duplicates in user_list:
+            if duplicates == self.user_name:
+                return True
+            else:
+                return False
+    
+    def check_class_name(self):
+        DB = self.update_user_from_filedb()
+        for class_list in DB[self.user_type].keys():
+            if class_list == self.class_name:
+                return True
+        return False
+            
     def add_user(self):
-        # make a exception for student, teacher, tutor
         if os.path.isfile(FILEDB) == False:
             self.db_creation()
-        DB = self.update_user_from_filedb()
-        DB[self.user_type].append([self.name, self.surname, self.class_name])
-        #print(DB)
-        with open(FILEDB, mode='w') as file:
-            file.write(json.dumps(DB, indent=4))
-
+            DB = self.update_user_from_filedb()
+            if len(DB[self.user_type]) == 0:
+                DB[self.user_type].update({self.class_name: [self.user_name]})
+                with open(FILEDB, mode='w') as file:
+                    file.write(json.dumps(DB, indent = 4))
+                    
+        elif os.path.isfile(FILEDB) == True and self.check_class_name() == True:
+            DB = self.update_user_from_filedb()
+            DB[self.user_type][self.class_name].append(self.user_name)
+            with open(FILEDB, mode='w') as file:
+                file.write(json.dumps(DB, indent = 4))
+                
+        elif os.path.isfile(FILEDB) == True and self.check_class_name() != True:
+            DB = self.update_user_from_filedb()
+            DB[self.user_type].update({self.class_name: [self.user_name]})
+            with open(FILEDB, mode='w') as file:
+                file.write(json.dumps(DB, indent = 4))
 
 if __name__ == '__main__':
-    d = School(name='Michał', surname='Rudzki', user_type='student', class_name='2C')
-    d.add_user()
+    lista_db =[['student',['Michał Rudzki', '3c'],['Grzegorz Rudzki', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c']]]
     
-    f = School(name='Grzegorz', surname='Rudzki', user_type='teacher', class_name='1C')
-    f.add_user()
-    
-    g = School(name='Urszula', surname='Rudzka', user_type='tutor', class_name='2C')
-    g.add_user()
+    for student in lista_db:
+        for s in student[1:]:
+            # 'student', 'user_name', 'class_name'
+            obj = School(student[0], s[0].split(' '), s[1])
+            obj.add_user()

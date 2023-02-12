@@ -18,16 +18,10 @@ def main():
                 student = input().split(' ')
                 print("Podaj nazwę klasy: ")
                 student.append(input().strip())
-                user_obj = School(None, student[0], student[1], USER_TYPE[0], student[2], None)
+                user_obj = School(USER_TYPE[0], student[0:2], student[2])
                 user_obj.add_user()
             elif user_input in ['n', 'nauczyciel']:
-                print(f"Podaj Tytuł oraz Imię i Nazwisko [{USER_TYPE[1]}]: ")
-                teacher = input().split(' ')
-                print(f"Podaj przedmiot(y) jaki będzię uczył: ")
-                print(f"(przedmioty odziel przecinkami)")
-                teacher.append(input().split(','))
-                user_obj = School(teacher[0], teacher[1], teacher[2], USER_TYPE[1], None, teacher[3])
-                user_obj.add_user()
+                pass
             elif user_input in ['w', 'wychowawca']:
                 pass
             
