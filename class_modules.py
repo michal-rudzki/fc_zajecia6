@@ -61,7 +61,12 @@ class School():
                     file.write(json.dumps(DB, indent = 4))
         elif os.path.isfile(FILEDB) == True and self.check_class_name() == True:
             DB = self.update_user_from_filedb()
-            DB[self.user_type][self.class_name].append(self.user_name)
+            if self.user_type == USER_TYPE[0]:
+                DB[self.user_type][self.class_name].append(self.user_name)
+            elif self.user_type == USER_TYPE[1]:
+                pass
+            elif self.user_type == USER_TYPE[2]:
+                DB[self.user_type].update({self.class_name: self.user_name})
             with open(FILEDB, mode='w') as file:
                 file.write(json.dumps(DB, indent = 4))
         elif os.path.isfile(FILEDB) == True and self.check_class_name() != True:
