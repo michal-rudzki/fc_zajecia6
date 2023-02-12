@@ -9,6 +9,7 @@ def main():
         if not user_input or user_input in ['koniec', 'k']:
             print("Koniczymy...")
             break
+
         elif user_input in ['utwórz', 'u']:
             print("Utwórz...")
             print("[u]czeń, [n]auczyciel, [w]ychowawca")
@@ -18,13 +19,19 @@ def main():
                 student = input().split(' ')
                 print("Podaj nazwę klasy: ")
                 student.append(input().strip())
-                user_obj = School(USER_TYPE[0], student[0:2], student[2])
-                user_obj.add_user()
+                student_obj = School(USER_TYPE[0], student[0:2], student[2])
+                student_obj.add_user()
+
             elif user_input in ['n', 'nauczyciel']:
                 pass
+
             elif user_input in ['w', 'wychowawca']:
-                pass
-            
+                print(f"Podaj Tytuł oraz Imię i Nazwisko: [{USER_TYPE[2]}] ")
+                tutor = input().split(' ')
+                print(f"Nazwa prowadzonej klasy: ")
+                tutor.append(input().strip())
+                tutor_obj = School(USER_TYPE[2], tutor[0:3], tutor[3])
+                tutor_obj.add_user()
 
         elif user_input in ['zarządzaj', 'z']:
             print("Zarządzaj...")

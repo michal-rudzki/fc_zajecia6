@@ -11,14 +11,15 @@ class School():
 
     def __init__(self, *args):
         self.user_type = args[0]
-        if args[0] == 'student':
+        if args[0] == USER_TYPE[0]:
             self.user_name = args[1]
             self.class_name = args[2]
-        elif args[0] == 'nauczyciel':
+        elif args[0] == USER_TYPE[1]:
             self.user_name = args[1]
             self.school_items = args[2]
-        elif args[0] == 'wychowawca':
-            self.tutor = args[3]
+        elif args[0] == USER_TYPE[2]:
+            self.user_name = args[1]
+            self.class_name = args[2]
     
     def update_user_from_filedb(self):
         with open(FILEDB, mode='r') as file:
@@ -50,21 +51,30 @@ class School():
             self.db_creation()
             DB = self.update_user_from_filedb()
             if len(DB[self.user_type]) == 0:
-                DB[self.user_type].update({self.class_name: [self.user_name]})
+                if self.user_type == USER_TYPE[0]:
+                    DB[self.user_type].update({self.class_name: [self.user_name]})
+                elif self.user_type == USER_TYPE[1]:
+                    pass
+                elif self.user_type == USER_TYPE[2]:
+                    DB[self.user_type].update({self.class_name: [self.user_name]})
                 with open(FILEDB, mode='w') as file:
                     file.write(json.dumps(DB, indent = 4))
-                    
         elif os.path.isfile(FILEDB) == True and self.check_class_name() == True:
             DB = self.update_user_from_filedb()
             DB[self.user_type][self.class_name].append(self.user_name)
             with open(FILEDB, mode='w') as file:
                 file.write(json.dumps(DB, indent = 4))
-                
         elif os.path.isfile(FILEDB) == True and self.check_class_name() != True:
             DB = self.update_user_from_filedb()
-            DB[self.user_type].update({self.class_name: [self.user_name]})
+            if self.user_type == USER_TYPE[0]:
+                DB[self.user_type].update({self.class_name: [self.user_name]})
+            elif self.user_type == USER_TYPE[1]:
+                pass
+            elif self.user_type == USER_TYPE[2]:
+                DB[self.user_type].update({self.class_name: self.user_name})
             with open(FILEDB, mode='w') as file:
                 file.write(json.dumps(DB, indent = 4))
+            
 
 if __name__ == '__main__':
     lista_db =[['student',['Michał Rudzki', '3c'],['Grzegorz Rudzki', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c']]]
