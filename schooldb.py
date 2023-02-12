@@ -58,7 +58,7 @@ def main():
             print(f"Zarządzaj...")
             print(f"[kl]asa, [u]czeń, [n]auczyciel")
             user_input = input()
-            if not user_input or user_input in ['klasa', 'kl']:
+            if user_input in ['klasa', 'kl']:
                 print(f"Lista klas:")
                 class_list = School(USER_TYPE[0])
                 all_class = class_list.list_all_class()
@@ -73,6 +73,9 @@ def main():
                 for students in students_list:
                     student = " ".join(students)
                     print(f"uczeń: {student}")
+            elif user_input in ['uczeń', 'u']:
+                print(f"Podaj Imię i Nazwisko ucznia: ")
+                user_input = input()
 
 if __name__ == '__main__':
     main()
