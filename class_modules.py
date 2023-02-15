@@ -93,16 +93,39 @@ class School():
         class_students = DB[USER_TYPE[0]][class_name]
         return class_students
     
+    def list_all_students(self):
+        DB = self.update_user_from_filedb()
+        students = []
+        for key, value in DB[USER_TYPE[0]].items():
+            for student in value:
+                students.append(" ".join(student))
+        return students
+        
+    def return_students_class(self, student):
+        DB = self.update_user_from_filedb()
+        for key, value in DB[USER_TYPE[0]].items():
+            for students_list in value:
+                if students_list == student.split(" "):
+                    student_class = key
+                    return student_class
+        return f"Brak: {student}"
+    
     def tutor_of_the_class(self, class_name):
         DB = self.update_user_from_filedb()
         tutor = DB[USER_TYPE[2]][class_name]
         return tutor
 
+
+
 if __name__ == '__main__':
-    lista_db =[['student',['Michał Rudzki', '3c'],['Grzegorz Rudzki', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c']]]
+    students_list = [['student',['Michał Korona', '3c'],['Grzegorz Kos', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c'],['Karolina Wędzonka', '3c'],['Katarzyna Wronka', '2c'],['Daniel Kiełbasa', '2c'],['Konrad Wolny', '2c'],['Piotr Węgiel', '2c'],['Alicja Cudo', '2c'],['Marcin Prokop', '1c'],['Mateusz Zielony', '1c'],['Daria Kuma', '1c'],['Dagmara Kruk', '1c'],['Tadeusz Sok', '1c']]]
     
-    for student in lista_db:
+    for student in students_list:
         for s in student[1:]:
             # 'student', 'user_name', 'class_name'
             obj = School(student[0], s[0].split(' '), s[1])
             obj.add_user()
+    
+    # teachers_list = [['teacher'], ['mgr Adam Kłaput', ['1c','2c'],['Matematyka','Fizyka']]]
+    
+    #for teacher in teachers_list:
