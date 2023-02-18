@@ -92,13 +92,19 @@ def main():
                 teacher = School(USER_TYPE[1])
                 for teacher_list in teacher.list_all_teachers():
                     print(f"Nauczyciel: {teacher_list}")
-                user_input = input()
+                user_input = input("Podaj nauczyciela: ")
                 for class_list in teacher.list_teachers_class(user_input):
                     print(f"Klasa: {class_list}")
                 
             elif user_input in ['wychowawca', 'w']:
                 tutor = School(USER_TYPE[2])
-                pass
+                for tutor_list in tutor.list_all_tutors():
+                    print(f"Wychowawca: {tutor_list}")
+                user_input = input("Podaj wychowawce: ")
+                for student in tutor.list_tutors_class(user_input):
+                    student_name = " ".join(student)
+                    print(f"Uczeń: {student_name}")
+                    
 
 if __name__ == '__main__':
     main()

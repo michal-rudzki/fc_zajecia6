@@ -15,6 +15,8 @@ class School():
             self.user_type = args[0]
         elif args[0] == USER_TYPE[1] and len(args) == 1:
             self.user_type = args[0]
+        elif args[0] == USER_TYPE[2] and len(args) == 1:
+            self.user_type = args[0]
         elif args[0] == USER_TYPE[0]:
             self.user_name = args[1]
             self.class_name = args[2]
@@ -92,6 +94,7 @@ class School():
     
     def list_all_users_from_class(self, class_name):
         DB = self.update_user_from_filedb()
+        tmp = class_name
         class_students = DB[USER_TYPE[0]][class_name]
         return class_students
     
@@ -138,9 +141,27 @@ class School():
         DB = self.update_user_from_filedb()
         tutor = DB[USER_TYPE[2]][class_name]
         return tutor
-
-
-
+    
+    def list_tutors_class(self, tutors):
+        DB = self.update_user_from_filedb()
+        tutor_class = []
+        tutor_students_list = []
+        for key, value in DB[USER_TYPE[2]].items():
+            value = " ".join(value)
+            if tutors in value:
+                tutor_class.append(key)
+        tutor_students_list = self.list_all_users_from_class(tutor_class[0])
+        return tutor_students_list
+        
+        
+    def list_all_tutors(self):
+        DB = self.update_user_from_filedb()
+        tutor = []
+        for key, values in DB[USER_TYPE[2]].items():
+            tutor.append(" ".join(values))
+        return tutor
+    
+    
 if __name__ == '__main__':
     students_list = [['student',['Michał Korona', '3c'],['Grzegorz Kos', '3c'],['Mirosław Topor', '3c'],['Urszula Tapicer', '3c'],['Karolina Wędzonka', '3c'],['Katarzyna Wronka', '2c'],['Daniel Kiełbasa', '2c'],['Konrad Wolny', '2c'],['Piotr Węgiel', '2c'],['Alicja Cudo', '2c'],['Marcin Prokop', '1c'],['Mateusz Zielony', '1c'],['Daria Kuma', '1c'],['Dagmara Kruk', '1c'],['Tadeusz Sok', '1c']]]
     
