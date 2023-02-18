@@ -110,6 +110,15 @@ class School():
                     return student_class
         return f"Brak: {student}"
     
+    def get_school_items(self, class_name):
+        DB = self.update_user_from_filedb()
+        items_list = []
+        for teacher, items in DB[USER_TYPE[1]].items():
+            if class_name in items[0]:
+                items_list.append([teacher, items[1]])
+        school_items = items_list
+        return school_items
+    
     def tutor_of_the_class(self, class_name):
         DB = self.update_user_from_filedb()
         tutor = DB[USER_TYPE[2]][class_name]

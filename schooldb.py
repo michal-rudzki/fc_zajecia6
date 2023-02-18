@@ -80,9 +80,15 @@ def main():
                 print(f"Podaj Imię i Nazwisko ucznia: ")
                 user_input = input()
                 student_class = students.return_students_class(user_input)
+                school_items = students.get_school_items(student_class)
                 print(f"Uczeń [{user_input}] chodzi do klasy [{student_class}]")
-                print(f"Przedmioty:")
-                print(f"")
+                print(f"Przedmioty: \n")
+                for items in school_items:
+                    if items[0]:
+                        print(f"Nauczyciel: {items[0]}")
+                        for i in items[1]:
+                            print(f"Przedmiot: {i}")
+                            
             elif user_input in ['nauczyciel', 'n']:
                 pass
             elif user_input in ['wychowawca', 'w']:
