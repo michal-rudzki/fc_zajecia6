@@ -13,6 +13,8 @@ class School():
         self.user_type = args[0]
         if args[0] == USER_TYPE[0] and len(args) == 1:
             self.user_type = args[0]
+        elif args[0] == USER_TYPE[1] and len(args) == 1:
+            self.user_type = args[0]
         elif args[0] == USER_TYPE[0]:
             self.user_name = args[1]
             self.class_name = args[2]
@@ -100,6 +102,19 @@ class School():
             for student in value:
                 students.append(" ".join(student))
         return students
+    
+    def list_all_teachers(self):
+        DB = self.update_user_from_filedb()
+        teachers = []
+        for key, value in DB[USER_TYPE[1]].items():
+            teachers.append(key)
+        return teachers
+    
+    def list_teachers_class(self, teacher):
+        DB = self.update_user_from_filedb()
+        teacher_class = DB[USER_TYPE[1]][teacher][0]
+
+        return teacher_class
         
     def return_students_class(self, student):
         DB = self.update_user_from_filedb()

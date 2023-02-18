@@ -88,10 +88,16 @@ def main():
                         print(f"Nauczyciel: {items[0]}")
                         for i in items[1]:
                             print(f"Przedmiot: {i}")
-                            
             elif user_input in ['nauczyciel', 'n']:
-                pass
+                teacher = School(USER_TYPE[1])
+                for teacher_list in teacher.list_all_teachers():
+                    print(f"Nauczyciel: {teacher_list}")
+                user_input = input()
+                for class_list in teacher.list_teachers_class(user_input):
+                    print(f"Klasa: {class_list}")
+                
             elif user_input in ['wychowawca', 'w']:
+                tutor = School(USER_TYPE[2])
                 pass
 
 if __name__ == '__main__':
